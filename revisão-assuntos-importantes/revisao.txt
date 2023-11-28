@@ -1,0 +1,5 @@
+## pontos importantes - ponteiros
+
+* úteis quando uma variável tem que ser acessada em diferentes partes de um programa.
+* 
+
