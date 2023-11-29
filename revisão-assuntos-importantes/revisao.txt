@@ -3,3 +3,6 @@
 * úteis quando uma variável tem que ser acessada em diferentes partes de um programa.
 * 
 
+##Ponteiros para funções
+
+* O uso de ponteiros para funções em C serve principalmente para definir, em tempo de execução, qual função será executada;
