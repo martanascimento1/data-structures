@@ -29,9 +29,13 @@ int main ()
  printf("Enter the value you want to search:\n");
  scanf("%d",&v);
  result = binarySearch(array, 16, v );
- if(result == -1){
- 	printf("value not found\n");
- }else{
+
+    if(result == -1)
+    {
+ 	  printf("value not found\n");
+ }
+   else
+   {
  	printf("value found\n");
  }
  return 0;

@@ -1,9 +1,8 @@
-## pontos importantes - ponteiros
+Pontos importantes - ponteiros
 
 * úteis quando uma variável tem que ser acessada em diferentes partes de um programa.
-* 
 
-##Ponteiros para funções
+Ponteiros para funções
 
 O uso de ponteiros para funções em C serve principalmente para definir, em tempo de execução, qual função será executada;
  -tipo de dado que aponta para a função: typedef int TIPOFuncaoSemParametros();
@@ -11,13 +10,3 @@ O uso de ponteiros para funções em C serve principalmente para definir, em tem
    ou
  -tipo_de_retorno (*nome_do_ponteiro)
 (declaração_de_parâmetros);
- 
-## lista encadeada
-## malloc
-## alocação dinâmica de memória
-## busca binária
-## busca linear
-
-
-// subir escadas; pular obstáculos;  
-*a cada nível o usuário deve se superar e desenvolver habilidades mais díficeis para conseguir vencer as fases;
