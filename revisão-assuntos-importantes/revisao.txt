@@ -5,4 +5,11 @@
 
 ##Ponteiros para funções
 
-* O uso de ponteiros para funções em C serve principalmente para definir, em tempo de execução, qual função será executada;
+O uso de ponteiros para funções em C serve principalmente para definir, em tempo de execução, qual função será executada;
+ -tipo de dado que aponta para a função: typedef int TIPOFuncaoSemParametros();
+ -tipo_de_retorno (*nome_do_ponteiro)();
+   ou
+ -tipo_de_retorno (*nome_do_ponteiro)
+(declaração_de_parâmetros);
+ 
+## lista encade
