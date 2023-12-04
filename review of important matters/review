@@ -12,4 +12,12 @@ O uso de ponteiros para funções em C serve principalmente para definir, em tem
  -tipo_de_retorno (*nome_do_ponteiro)
 (declaração_de_parâmetros);
  
-## lista encade
+## lista encadeada
+## malloc
+## alocação dinâmica de memória
+## busca binária
+## busca linear
+
+
+// subir escadas; pular obstáculos;  
+*a cada nível o usuário deve se superar e desenvolver habilidades mais díficeis para conseguir vencer as fases;

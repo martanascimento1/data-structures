@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/marta/estruturas-de-dados/revisão-assuntos-importantes",
-      "program": "/home/marta/estruturas-de-dados/revisão-assuntos-importantes/build/Debug/outDebug",
+      "cwd": "/home/marta/estruturas-de-dados/review of important matters",
+      "program": "/home/marta/estruturas-de-dados/review of important matters/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
