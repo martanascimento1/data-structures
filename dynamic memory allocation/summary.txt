@@ -1,3 +1,4 @@
+##Resumo de alocação dinâmica de memória
 Na alocação dinâmica de memória podemos utilizar as funções malloc, realloc e free;
 Todas essas funções estão contidas na biblioteca stdlib. 
 
