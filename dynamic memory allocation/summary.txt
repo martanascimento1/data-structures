@@ -1,0 +1,20 @@
+Na alocação dinâmica de memória podemos utilizar as funções malloc, realloc e free;
+Todas essas funções estão contidas na biblioteca stdlib. 
+
+- Malloc : recebe um parâmetro com a quantidade de bytes que serão alocados e aloca espaço para esse
+bloco de bytes consecutivos na memória RAM da máquina e retorna o endereço de memória reservado. O 
+endereço devolvido é um void* e esse endereço é armazenado num ponteiro de tipo apropriado. 
+Ex: void * malloc(size_t quantidadeBytes);
+* o operador sizeof calcula e informa a quantidade de bytes de um tipo de dado ou estrutura de dados.
+Ex: int *p_int;
+p_int = (int *) malloc(3 * sizeof(int));
+
+- Free: Quando alocamos memória dinamicamente é necessário que nós a liberemos quando ela não for mais
+necessária, free devolve a área de memória alocada dinamicamente pelas variáveis e deve ser realizada antes
+do término do programa; passar como parâmetro para a função free() o ponteiro que aponta para o início da 
+memória a ser desalocada
+Ex: void free(void *p);
+
+
+- Realloc: redimensionar um espaço alocado previamente com malloc().
+Ex: void * realloc(void *ptr, unsigned int num);
