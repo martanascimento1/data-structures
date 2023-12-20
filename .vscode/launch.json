@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/marta/ED/data-structures/questoes-haskell",
-      "program": "/home/marta/ED/data-structures/questoes-haskell/build/Debug/outDebug",
+      "cwd": "/home/marta/ED/data-structures/haskell-questions",
+      "program": "/home/marta/ED/data-structures/haskell-questions/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
