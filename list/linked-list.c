@@ -21,7 +21,26 @@ void insertInit (List  *lista, int item) {
 
 }
 // inserção no final da lista 
+void insertFinal (List * lista, int item) {
+    Node *node, *new = (Node*)malloc(sizeof(Node));
+    new -> item = item;
+    new ->proximo = NULL;
 
+    if (lista->inicio == NULL) {
+        lista->inicio = new;
+        
+    }
+    else {
+       node = lista->inicio;
+       while (node->proximo != NULL)
+       {
+        node = node->proximo;
+        node->proximo = new;
+        lista->tam++;
+       }
+    }
+     lista->tam++;
+}
 // imprimir a lista
 void imprimir (List *lista) {
     Node *inicio = lista -> inicio;
@@ -40,7 +59,7 @@ void imprimir (List *lista) {
     lista.inicio = NULL;
     lista.tam = 0;
      do {
-        printf("1 - inserir no inicio\n2 - imprimir\n3 - sair\n");
+        printf("1 - inserir no inicio\n2 - imprimir\n3 - inserir no fim\n4 - sair\n");
         scanf("%d", &op);
         switch (op)
         {
@@ -55,13 +74,16 @@ void imprimir (List *lista) {
             break;
         
         case 3:
+        printf("insira o valor:\n"); 
+        scanf("%d", &valor);
+        insertFinal(&lista, valor);
+        break;
+        case 4:
         printf("finalizando\n");
         break;
         default:
         printf("opção inválida\n");
-        }
-        
-     } while (op != 3);
+     } } while (op != 3);
      
     return 0;
  }
