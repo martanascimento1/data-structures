@@ -113,7 +113,18 @@ void destruir(LISTA *l)
 void inverter(LISTA *l)
 {
 
-}
+Lista* p; /* variável auxiliar para percorrer a lista */
+
+Lista* q; /* variável auxiliar para nova lista */
+
+q=l();
+
+for (p = l; p != NULL; p = p->prox){
+
+q=inserir(q,p->info);
+
+q=q->prox;
+} } 
 
 //Insira o código aqui 
 
