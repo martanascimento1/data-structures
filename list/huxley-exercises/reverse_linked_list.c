@@ -112,20 +112,21 @@ void destruir(LISTA *l)
 */
 void inverter(LISTA *l)
 {
+    NO* prev = NULL;
+    NO* current = l->cabeca->prox;
+    NO* next = NULL;
 
-Lista* p; /* variável auxiliar para percorrer a lista */
+    while (current != l->cabeca)
+    {
+        next = current->prox;   // Guarda o próximo nó
+        current->prox = prev;   // Inverte o ponteiro para o nó anterior
+        prev = current;         // Move prev para o nó atual
+        current = next;         // Move current para o próximo nó original
+    }
 
-Lista* q; /* variável auxiliar para nova lista */
-
-q=l();
-
-for (p = l; p != NULL; p = p->prox){
-
-q=inserir(q,p->info);
-
-q=q->prox;
-} } 
-
+    // Atualiza o ponteiro da cabeça para apontar para o último nó
+    l->cabeca->prox = prev;
+}
 //Insira o código aqui 
 
 /////////////////////////////////////////////////////
