@@ -127,9 +127,6 @@ void inverter(LISTA *l)
     // Atualiza o ponteiro da cabeça para apontar para o último nó
     l->cabeca->prox = prev;
 }
-//Insira o código aqui 
-
-/////////////////////////////////////////////////////
 
 void lerItens(LISTA *l)
 {
@@ -155,7 +152,6 @@ int main(){
 
   lerItens(&l);
   imprimirLista(&l);
-    
   inverter(&l);
   imprimirLista(&l);
 
