@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // Definição da estrutura do nó da lista encadeada
 typedef struct Node {
@@ -64,16 +65,16 @@ void findMaxZeroSequence(Node* head) {
 // Função principal
 int main() {
     Node* head = NULL;
-    int num;
+    char c;
 
     // Leitura da entrada
     while (1) {
-        scanf("%d", &num);
-        if (num == 0) {
-            insert(&head, num);
+        scanf(" %c", &c); // Lê um caractere ignorando espaços em branco
+        if (c == '0' || c == '1') {
+            insert(&head, c - '0');
+        } else {
             break;
         }
-        insert(&head, num);
     }
 
     // Encontrar a maior sequência de zeros
@@ -81,3 +82,4 @@ int main() {
 
     return 0;
 }
+
