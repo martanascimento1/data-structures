@@ -45,7 +45,12 @@ void remover(No* head) {
     }
 }
 
-
+void printList(No* node) {
+    while (node != NULL) {
+        printf("%d\n", node->item);
+        node = node->next;
+    }
+}
 void intersection(No* l1, No* l2) {
     No* resultado = NULL;
 
@@ -70,7 +75,7 @@ void intersection(No* l1, No* l2) {
     }
 }
 
-void free(No** head) {
+void freeMemory(No** head) {
     No* current = *head;
     No* next;
 
@@ -98,8 +103,8 @@ int main() {
     }
 
     intersection(l1, l2);
-    free(&l1);
-    free(&l2);
+    freeMemory(&l1);
+    freeMemory(&l2);
 
     return 0;
 }
