@@ -1,76 +1,95 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct No {
-    int item;
-    struct No* next;
-} No;
+// Estrutura para um nó da lista encadeada
+typedef struct No No;
+struct No {
+  int valor;
+  No *proximo;
+};
 
-void inserir(No** lista, int novo_item) {
-    No* novo_no = (No*)malloc(sizeof(No));
-    novo_no->item = novo_item;
-    novo_no->next = NULL;
-
-    if (*lista == NULL) {
-        *lista = novo_no;
-    } else {
-        No* ultimo = *lista;
-        while (ultimo->next != NULL) {
-            ultimo = ultimo->next;
-        }
-        ultimo->next = novo_no;
-    }
+// Função para criar um novo nó
+No *criar_no(int valor) {
+  No *novo_no = (No *)malloc(sizeof(No));
+  novo_no->valor = valor;
+  novo_no->proximo = NULL;
+  return novo_no;
 }
 
-// Função para encontrar a maior sequência de zeros
-void findMaxZeroSequence(Node* head) {
-    int maxStart = -1, maxEnd = -1;
-    int currentStart = -1, currentEnd = -1;
-    int maxLength = 0, currentLength = 0;
-    int position = 0;
+// Função para criar uma lista encadeada
+No *criar_lista_encadeada() {
+  No *lista = NULL;
+  No *anterior = NULL;
+  int valor;
 
-    Node* current = head;
-    while (current != NULL) {
-        if (current->data == 0) {
-            if (currentStart == -1)
-                currentStart = position;
-            currentEnd = position;
-            currentLength++;
+  // Lê cada valor do usuário
+  while (scanf("%d", &valor) != EOF) {
+    // Cria um novo nó
+    No *novo_no = criar_no(valor);
 
-            if (currentLength > maxLength) {
-                maxLength = currentLength;
-                maxStart = currentStart;
-                maxEnd = currentEnd;
-            }
-        } else {
-            currentStart = -1;
-            currentEnd = -1;
-            currentLength = 0;
-        }
-
-        current = current->next;
-        position++;
-    }
-
-    if (maxStart != -1 && maxEnd != -1) {
-        printf("%d %d\n", maxStart, maxEnd);
+    // Insere o novo nó no final da lista
+    if (lista == NULL) {
+      lista = novo_no;
     } else {
-        printf("Nenhuma sequência de zeros encontrada.\n");
+      anterior->proximo = novo_no;
     }
+    anterior = novo_no;
+  }
+
+  return lista;
 }
 
-// Função principal
+// Função para imprimir a lista encadeada
+void imprimir_lista_encadeada(No *lista) {
+  while (lista != NULL) {
+    printf("%d ", lista->valor);
+    lista = lista->proximo;
+  }
+  printf("\n");
+}
+
+// Função para encontrar a maior sequência de 0 na lista encadeada
+void encontrar_maior_sequencia_de_zeros(No *lista, int *inicio, int *fim) {
+  int tamanho_atual = 0;
+  int tamanho_maximo = 0;
+  int inicio_atual = 0;
+  int inicio_maximo = 0;
+
+  while (lista != NULL) {
+    if (lista->valor == 0) {
+      tamanho_atual++;
+      if (tamanho_atual > tamanho_maximo) {
+        tamanho_maximo = tamanho_atual;
+        inicio_maximo = inicio_atual;
+      }
+    } else {
+      tamanho_atual = 0;
+      inicio_atual = lista->proximo;
+    }
+    lista = lista->proximo;
+  }
+
+  *inicio = inicio_maximo;
+  *fim = inicio_maximo + tamanho_maximo - 1; // Correção: subtrai 1 do tamanho_maximo
+}
+
+
 int main() {
-  No* lista = NULL;
-    int n;
+  // Cria a lista encadeada
+  No *lista = criar_lista_encadeada();
 
-    while (scanf("%d", &n) != EOF) {
-        inserir(&lista, n);
-    }
+  // Imprime a lista encadeada
+  imprimir_lista_encadeada(lista);
 
-    // Encontrar a maior sequência de zeros
-    findMaxZeroSequence(head);
+  // Encontra a maior sequência de 0
+  int inicio, fim;
+  encontrar_maior_sequencia_de_zeros(lista, &inicio, &fim);
 
-    return 0;
+  // Imprime a posição inicial e final da maior sequência de 0
+  printf("\n");
+  printf("%d %d\n", inicio, fim);
+
+  return 0;
 }
+
 
