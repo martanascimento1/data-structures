@@ -1,88 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Definição da estrutura para um nó da lista encadeada
-struct Node {
-    int data;
-    struct Node* next;
-};
+typedef struct No {
+    int item;
+    struct No* next;
+} No;
 
-// Função para inserir um novo nó no final da lista
-void insertAtEnd(struct Node** head, int data) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->next = NULL;
-    if (*head == NULL) {
-        *head = newNode;
+void inserir(No** lista, int novo_item) {
+    No* novo_no = (No*)malloc(sizeof(No));
+    novo_no->item = novo_item;
+    novo_no->next = NULL;
+
+    if (*lista == NULL) {
+        *lista = novo_no;
     } else {
-        struct Node* temp = *head;
-        while (temp->next != NULL) {
-            temp = temp->next;
+        No* ultimo = *lista;
+        while (ultimo->next != NULL) {
+            ultimo = ultimo->next;
         }
-        temp->next = newNode;
+        ultimo->next = novo_no;
     }
 }
 
-// Função para verificar se B é um subconjunto de A
-int isSubset(struct Node* A, struct Node* B) {
-    struct Node* ptrB = B;
-    while (ptrB != NULL) {
-        int found = 0;
-        struct Node* ptrA = A;
-        while (ptrA != NULL) {
-            if (ptrA->data == ptrB->data) {
-                found = 1;
+int verificar(No* lista1, No* lista2) {
+    while (lista2 != NULL) {
+        int n = 0;
+        No* l1 = lista1;
+        while (l1 != NULL) {
+            if (l1->item == lista2->item) {
+                n = 1;
                 break;
             }
-            ptrA = ptrA->next;
+            l1 = l1->next;
         }
-        if (!found) {
-            return 0; // Se um elemento de B não for encontrado em A, B não é um subconjunto de A
+        if (!n) {
+            return 0; 
         }
-        ptrB = ptrB->next;
+        lista2 = lista2->next;
     }
-    return 1; // Se todos os elementos de B forem encontrados em A, B é um subconjunto de A
-}
-
-// Função para imprimir os elementos de uma lista encadeada
-void printList(struct Node* head) {
-    struct Node* temp = head;
-    while (temp != NULL) {
-        printf("%d ", temp->data);
-        temp = temp->next;
-    }
-    printf("\n");
+    return 1; 
 }
 
 int main() {
-    int n, m;
-    printf("Digite o tamanho da primeira lista: ");
+    int n, m, x, y;
     scanf("%d", &n);
-    
-    struct Node* A = NULL;
-    printf("Digite os elementos da primeira lista: ");
+
+    No* lista1 = NULL;
     for (int i = 0; i < n; i++) {
-        int data;
-        scanf("%d", &data);
-        insertAtEnd(&A, data);
+        scanf("%d", &x);
+        inserir(&lista1, x);
     }
-    
-    printf("Digite o tamanho da segunda lista: ");
     scanf("%d", &m);
-    
-    struct Node* B = NULL;
-    printf("Digite os elementos da segunda lista: ");
+    No* lista2 = NULL;
     for (int i = 0; i < m; i++) {
-        int data;
-        scanf("%d", &data);
-        insertAtEnd(&B, data);
+        scanf("%d", &y);
+        inserir(&lista2, y);
     }
-    
-    if (isSubset(A, B)) {
+
+    if (verificar(lista1, lista2)) {
         printf("1\n");
     } else {
         printf("0\n");
     }
-    
+
     return 0;
 }

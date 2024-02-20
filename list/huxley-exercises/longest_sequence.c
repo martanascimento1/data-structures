@@ -1,28 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Definição da estrutura do nó da lista encadeada
-typedef struct Node {
-    int data;
-    struct Node* next;
-} Node;
+typedef struct No {
+    int item;
+    struct No* next;
+} No;
 
-// Função para inserir um elemento no final da lista
-void insert(Node** head, int data) {
-    Node* newNode = (Node*)malloc(sizeof(Node));
-    newNode->data = data;
-    newNode->next = NULL;
-    
-    if (*head == NULL) {
-        *head = newNode;
-        return;
-    }
+void inserir(No** lista, int novo_item) {
+    No* novo_no = (No*)malloc(sizeof(No));
+    novo_no->item = novo_item;
+    novo_no->next = NULL;
 
-    Node* temp = *head;
-    while (temp->next != NULL) {
-        temp = temp->next;
+    if (*lista == NULL) {
+        *lista = novo_no;
+    } else {
+        No* ultimo = *lista;
+        while (ultimo->next != NULL) {
+            ultimo = ultimo->next;
+        }
+        ultimo->next = novo_no;
     }
-    temp->next = newNode;
 }
 
 // Função para encontrar a maior sequência de zeros
@@ -64,17 +61,11 @@ void findMaxZeroSequence(Node* head) {
 
 // Função principal
 int main() {
-    Node* head = NULL;
-    char c;
+  No* lista = NULL;
+    int n;
 
-    // Leitura da entrada
-    while (1) {
-        scanf(" %c", &c); // Lê um caractere ignorando espaços em branco
-        if (c == '0' || c == '1') {
-            insert(&head, c - '0');
-        } else {
-            break;
-        }
+    while (scanf("%d", &n) != EOF) {
+        inserir(&lista, n);
     }
 
     // Encontrar a maior sequência de zeros

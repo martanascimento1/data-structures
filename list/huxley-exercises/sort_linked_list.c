@@ -1,71 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct No {
+typedef struct No {
     int item;
-    struct No* next;
-};
+    struct No *next;
+}No;
 
-void inverter(struct No* a, struct No* b) {
+void inverter(No* a, No* b) {
     int temp = a->item;
     a->item = b->item;
     b->item = temp;
 }
 
-void push(struct No** head_ref, int new_data) {
-    struct No* new_node = (struct No*)malloc(sizeof(struct No));
-    new_node->item = new_data;
-    new_node->next = (*head_ref);
-    (*head_ref) = new_node;
+void inserir(No** head, int n) {
+    No* node = (No*)malloc(sizeof(No));
+    node->item = n;
+    node->next = (*head);
+    (*head) = node;
 }
 
-void printList(struct No* node) {
+void exibirLista(No* node) {
+    printf("\n");
     while (node != NULL) {
         printf("%d ", node->item);
         node = node->next;
     }
-    printf("\n");
 }
 
-void bubbleSort(struct No* start) {
-    int swapped;
-    struct No* ptr;
-    struct No* lptr = NULL;
+void bubbleSort(No* lista) {
 
-    // Caso base
-    if (start == NULL)
+    if (lista == NULL) {
         return;
-
-    do {
-        swapped = 0;
-        ptr = start;
-
-        while (ptr->next != lptr) {
-            if (ptr->item > ptr->next->item) {
-                inverter(ptr, ptr->next);
-                swapped = 1;
-            }
-            ptr = ptr->next;
-        }
-        lptr = ptr;
-    } while (swapped);
-}
-
-// Função principal
-int main() {
-    struct No* start = NULL;
-    int data;
-
-    printf("Digite os números separados por espaços (Ctrl+D para finalizar):\n");
-
-    // Lê os números até o final do arquivo (EOF)
-    while (scanf("%d", &data) != EOF) {
-        push(&start, data);
     }
 
-    // Chamada da função para ordenar a lista
-    bubbleSort(start);
-    printList(start);
+    int troca = 1;
+    No* primeiro = lista;
+    No* ultimo = NULL;
+
+    while (troca) {
+        troca = 0;
+        primeiro = lista;
+
+        while (primeiro->next != ultimo) {
+            if (primeiro->item > primeiro->next->item) {
+                inverter(primeiro, primeiro->next);
+                troca = 1;
+            }
+            primeiro = primeiro->next;
+        }
+        ultimo = primeiro;
+    }
+}
+
+int main() {
+    struct No* head = NULL;
+    int n;
+
+    while (scanf("%d", &n) != EOF) {
+        inserir(&head, n);
+    }
+    bubbleSort(head);
+    exibirLista(head);
 
     return 0;
 }
+
