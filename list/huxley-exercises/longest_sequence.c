@@ -70,7 +70,8 @@ void encontrar_maior_sequencia_de_zeros(No *lista, int *inicio, int *fim) {
   }
 
   *inicio = inicio_maximo;
-  *fim = inicio_maximo + tamanho_maximo - 1; // Correção: subtrai 1 do tamanho_maximo
+ *fim = inicio_maximo + tamanho_maximo - 2; // Correção: subtrai 2 do tamanho_maximo
+
 }
 
 

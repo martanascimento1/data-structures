@@ -6,57 +6,53 @@ typedef struct No {
     struct No* next;
 } No;
 
-
-void inserir(No** list, int novo_item) {
+void inserir_ordenado(No** lista, int novo_item) {
     No* novo_no = (No*)malloc(sizeof(No));
-    No* last = *list;
-
     novo_no->item = novo_item;
     novo_no->next = NULL;
 
-    if (*list == NULL) {
-        *list = novo_no;
-        return;
-    }
-
-    while (last->next != NULL) {
-        last = last->next;
-    }
-
-    last->next = novo_no;
-}
-
-void remover(No* head) {
-    No* current = head;
-    No* prox;
-
-    if (current == NULL) {
-        return;
-    }
-
-    while (current->next != NULL) {
-        if (current->item == current->next->item) {
-            prox = current->next->next;
-            free(current->next);
-            current->next = prox;
-        } else {
-            current = current->next;
+    if (*lista == NULL || novo_item < (*lista)->item) {
+        novo_no->next = *lista;
+        *lista = novo_no;
+    } else {
+        No* atual = *lista;
+        while (atual->next != NULL && atual->next->item < novo_item) {
+            atual = atual->next;
         }
+        novo_no->next = atual->next;
+        atual->next = novo_no;
     }
 }
-void printList(No* node) {
-    while (node != NULL) {
-        printf("%d\n", node->item);
-        node = node->next;
+
+void remover_duplicados(No* head) {
+    No* current = head;
+
+    while (current != NULL && current->next != NULL) {
+        No* runner = current;
+        while (runner->next != NULL) {
+            if (current->item == runner->next->item) {
+                No* next = runner->next->next;
+                free(runner->next);
+                runner->next = next;
+            } else {
+                runner = runner->next;
+            }
+        }
+        current = current->next;
     }
 }
 
 void intersection(No* l1, No* l2) {
     No* resultado = NULL;
 
+    // Remove duplicates from both lists
+    remover_duplicados(l1);
+    remover_duplicados(l2);
+
+    // Iterate through both lists, adding common elements to the intersection
     while (l1 != NULL && l2 != NULL) {
         if (l1->item == l2->item) {
-            inserir(&resultado, l1->item);
+            inserir_ordenado(&resultado, l1->item);
             l1 = l1->next;
             l2 = l2->next;
         } else if (l1->item < l2->item) {
@@ -66,8 +62,6 @@ void intersection(No* l1, No* l2) {
         }
     }
 
-    remover(resultado);
-
     if (resultado == NULL) {
         printf("VAZIO\n");
     } else {
@@ -75,6 +69,12 @@ void intersection(No* l1, No* l2) {
     }
 }
 
+void printList(No* node) {
+    while (node != NULL) {
+        printf("%d\n", node->item);
+        node = node->next;
+    }
+}
 
 int main() {
     No* l1 = NULL;
@@ -83,15 +83,14 @@ int main() {
 
     for (int i = 0; i < 20; i++) {
         scanf("%d", &a);
-        inserir(&l1, a);
+        inserir_ordenado(&l1, a);
     }
     for (int i = 0; i < 20; i++) {
         scanf("%d", &a);
-        inserir(&l2, a);
+        inserir_ordenado(&l2, a);
     }
 
     intersection(l1, l2);
+
     return 0;
 }
-
-

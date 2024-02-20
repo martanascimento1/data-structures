@@ -6,15 +6,15 @@ typedef struct No No;
 struct No {
   char item;
   int n;
-  No *proximo;
+  No *next;
 };
 
-No *criar_no(char item, int n) {
-  No *novo_no = (No *)malloc(sizeof(No));
-  novo_no->item = item;
-  novo_no->n = n;
-  novo_no->proximo = NULL;
-  return novo_no;
+No *inserirNo(char item, int n) {
+  No *no = (No *)malloc(sizeof(No));
+  no->item = item;
+  no->n = n;
+  no->next = NULL;
+  return no;
 }
 
 No *criarLista() {
@@ -25,22 +25,22 @@ No *criarLista() {
     n[item]++;
   }
 
-  No *lista_encadeada = NULL;
+  No *lista = NULL;
   for (int i = 0; i < 256; i++) {
     if (n[i] > 0) {
-      No *novo_no = criar_no(i, n[i]);
-      novo_no->proximo = lista_encadeada;
-      lista_encadeada = novo_no;
+      No *no = inserirNo(i, n[i]);
+      no->next = lista;
+      lista = no;
     }
   }
 
-  return lista_encadeada;
+  return lista;
 }
 
-void exibirLista(No *lista_encadeada) {
-  while (lista_encadeada != NULL) {
-    printf("%c %d\n", lista_encadeada->item, lista_encadeada->n);
-    lista_encadeada = lista_encadeada->proximo;
+void exibirLista(No *lista) {
+  while (lista != NULL) {
+    printf("%c %d\n", lista->item, lista->n);
+    lista = lista->next;
   }
 }
 
