@@ -1,15 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Estrutura para um nó da lista encadeada
-typedef struct No No;
-struct No {
-  char caractere;
-  int frequencia;
-  No *proximo;
-};
 
-// Função para criar um novo nó
+typedef struct No {
+    int item;
+    struct No *next;
+}No;
+
 No *criar_no(char caractere, int frequencia) {
   No *novo_no = (No *)malloc(sizeof(No));
   novo_no->caractere = caractere;
