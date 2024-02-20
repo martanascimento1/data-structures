@@ -2,38 +2,33 @@
 #include <stdlib.h>
 
 
-typedef struct No {
-    int item;
-    struct No *next;
-}No;
+typedef struct No No;
+struct No {
+  char item;
+  int n;
+  No *proximo;
+};
 
-No *criar_no(char caractere, int frequencia) {
+No *criar_no(char item, int n) {
   No *novo_no = (No *)malloc(sizeof(No));
-  novo_no->caractere = caractere;
-  novo_no->frequencia = frequencia;
+  novo_no->item = item;
+  novo_no->n = n;
   novo_no->proximo = NULL;
   return novo_no;
 }
 
-// Função para criar uma lista encadeada onde cada nó possui o caractere e sua frequência no texto
-No *criar_lista_encadeada() {
-  // Dicionário para armazenar a frequência de cada caractere
-  int frequencia[256] = {0};
-  char caractere;
+No *criarLista() {
+  int n[256] = {0};
+  char item;
 
-  // Lê cada caractere do usuário
-  while ((caractere = getchar()) != EOF) {
-    frequencia[caractere]++;
+  while ((item = getchar()) != EOF) {
+    n[item]++;
   }
 
-  // Lista encadeada para armazenar os caracteres e suas frequências
   No *lista_encadeada = NULL;
   for (int i = 0; i < 256; i++) {
-    if (frequencia[i] > 0) {
-      // Cria um novo nó
-      No *novo_no = criar_no(i, frequencia[i]);
-
-      // Insere o novo nó no início da lista
+    if (n[i] > 0) {
+      No *novo_no = criar_no(i, n[i]);
       novo_no->proximo = lista_encadeada;
       lista_encadeada = novo_no;
     }
@@ -42,20 +37,18 @@ No *criar_lista_encadeada() {
   return lista_encadeada;
 }
 
-// Função para imprimir a lista encadeada
-void imprimir_lista_encadeada(No *lista_encadeada) {
+void exibirLista(No *lista_encadeada) {
   while (lista_encadeada != NULL) {
-    printf("%c %d\n", lista_encadeada->caractere, lista_encadeada->frequencia);
+    printf("%c %d\n", lista_encadeada->item, lista_encadeada->n);
     lista_encadeada = lista_encadeada->proximo;
   }
 }
 
 int main() {
-  // Cria a lista encadeada
-  No *lista_encadeada = criar_lista_encadeada();
 
-   printf("\n");
-  imprimir_lista_encadeada(lista_encadeada);
+  No *lista = criarLista();
+  printf("\n");
+  exibirLista(lista);
 
   return 0;
 }
