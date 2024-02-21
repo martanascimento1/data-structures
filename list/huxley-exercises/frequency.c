@@ -9,7 +9,7 @@ struct No {
   No *next;
 };
 
-No *inserirNo(char item, int n) {
+No *criarNo(char item, int n) {
   No *no = (No *)malloc(sizeof(No));
   no->item = item;
   no->n = n;
@@ -28,7 +28,7 @@ No *criarLista() {
   No *lista = NULL;
   for (int i = 0; i < 256; i++) {
     if (n[i] > 0) {
-      No *no = inserirNo(i, n[i]);
+      No *no = criarNo(i, n[i]);
       no->next = lista;
       lista = no;
     }

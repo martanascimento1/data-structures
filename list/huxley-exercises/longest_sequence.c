@@ -16,18 +16,16 @@ No *criar_no(int valor) {
   return novo_no;
 }
 
-// Função para criar uma lista encadeada
-No *criar_lista_encadeada() {
+
+No *inserir() {
   No *lista = NULL;
   No *anterior = NULL;
   int valor;
-
-  // Lê cada valor do usuário
-  while (scanf("%d", &valor) != EOF) {
-    // Cria um novo nó
-    No *novo_no = criar_no(valor);
-
-    // Insere o novo nó no final da lista
+while (scanf("%d", &valor) != EOF) {
+  if (valor == 0) {
+    break;
+  } 
+  No *novo_no = criar_no(valor);
     if (lista == NULL) {
       lista = novo_no;
     } else {
@@ -38,18 +36,7 @@ No *criar_lista_encadeada() {
 
   return lista;
 }
-
-// Função para imprimir a lista encadeada
-void imprimir_lista_encadeada(No *lista) {
-  while (lista != NULL) {
-    printf("%d ", lista->valor);
-    lista = lista->proximo;
-  }
-  printf("\n");
-}
-
-// Função para encontrar a maior sequência de 0 na lista encadeada
-void encontrar_maior_sequencia_de_zeros(No *lista, int *inicio, int *fim) {
+void sequencia(No *lista, int *inicio, int *fim) {
   int tamanho_atual = 0;
   int tamanho_maximo = 0;
   int inicio_atual = 0;
@@ -69,25 +56,20 @@ void encontrar_maior_sequencia_de_zeros(No *lista, int *inicio, int *fim) {
     lista = lista->proximo;
   }
 
-  *inicio = inicio_maximo;
- *fim = inicio_maximo + tamanho_maximo - 2; // Correção: subtrai 2 do tamanho_maximo
-
+  // Corrige o cálculo do fim da sequência
+  if (tamanho_maximo > 0) {
+    *fim = inicio_maximo + tamanho_maximo - 1;
+  } else {
+    *inicio = -1;
+    *fim = -1;
+  }
 }
 
-
 int main() {
-  // Cria a lista encadeada
-  No *lista = criar_lista_encadeada();
-
-  // Imprime a lista encadeada
-  imprimir_lista_encadeada(lista);
-
-  // Encontra a maior sequência de 0
+  No *lista = inserir();
   int inicio, fim;
-  encontrar_maior_sequencia_de_zeros(lista, &inicio, &fim);
+  sequencia(lista, &inicio, &fim);
 
-  // Imprime a posição inicial e final da maior sequência de 0
-  printf("\n");
   printf("%d %d\n", inicio, fim);
 
   return 0;
