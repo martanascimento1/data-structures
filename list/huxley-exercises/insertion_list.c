@@ -22,16 +22,11 @@ typedef struct
     NO* cabeca;
 } LISTA;
 
-
-
-// Inicializa a lista deixando-a pronta para ser utilizada.
 void inicializar(LISTA *l)
 {
     l->cabeca = NULL;
 }
 
-
-// Cria um novo no com o item passado e tendo NULL como prox
 NO* criarNo(ITEM item, NO *prox)
 {
     NO* pNovo = (NO*) malloc(sizeof(NO));
@@ -41,7 +36,6 @@ NO* criarNo(ITEM item, NO *prox)
 }
 
 
-// Retornar o tamanho da lista
 int tamanho(LISTA *l)
 {
     NO* p = l->cabeca;
@@ -55,7 +49,6 @@ int tamanho(LISTA *l)
 }
 
 
-// Retorna true se a lista esta vazia (Cabeca = NULL)
 bool vazia(LISTA *l)
 {
     return l->cabeca == NULL;
@@ -66,24 +59,22 @@ bool vazia(LISTA *l)
 void exibirLista(LISTA *l)
 {
     NO* p = l->cabeca;
-    while (p)  // p != NULL
+    while (p)  
     {
         printf("(%d,%s)", p->item.chave, p->item.valor);
         p = p->prox;
     }
 }
 
-
-// Liberacao das variaveis dinamicas dos nos da lista, iniciando da cabeca
 void destruir(LISTA *l)
 {
     NO* atual = l->cabeca;
     while (atual) {
-        NO* prox = atual->prox; // guarda proxima posicao
-        free(atual);            // libera memoria apontada por atual
+        NO* prox = atual->prox; 
+        free(atual);         
         atual = prox;
     }
-    l->cabeca = NULL; // ajusta inicio da lista (vazia)
+    l->cabeca = NULL; 
 }
 
 
@@ -94,18 +85,50 @@ void imprimirLista(LISTA *l)
     printf("\n");
 }
 
-
-/////////////////////////////////////////////////////
-
-/*
- Objetivo: Inserir em uma lista ordenada o item passado e garantir
-           que nao havera duplicacao.
-*/
 bool inserirNaOrdem(ITEM item, LISTA *l)
 {
+    LISTA *atual = l;
+    NO *aux = NULL;
+    NO *novo = criarNo(item, NULL);
+
+    if (vazia(l))
+    {
+        atual->cabeca = novo; 
+        atual->cabeca->prox = NULL;
+        return true;
+    }
+    
+    if (atual->cabeca->item.chave > item.chave) {
+        novo->prox = atual->cabeca;
+        atual->cabeca = novo;
+
+        return true;
+    }
+
+    aux = atual->cabeca;
+
+    while (aux->prox != NULL)
+    {
+        if (aux->prox->item.chave > item.chave) {
+            break;
+        }
+        aux = aux->prox;
+
+    }
 
 
+    if (aux->item.chave == novo->item.chave)
+    {
+        free(novo); 
+        return false; 
+    }
+
+    novo->prox = aux->prox;
+    aux->prox = novo;
+
+    return true;
 }
+
 //////////////////////////////////////////////////////////////
 
 

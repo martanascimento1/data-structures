@@ -110,21 +110,19 @@ void destruir(LISTA *l)
  Objetivo: Inverte a lista encadeada ajustando apenas os apontadores,
            ou seja, evitando copiar os dados para uma nova lista.
 */
-void inverter(LISTA *l)
+void inverter(LISTA** l)
 {
-    LISTA* prev = NULL;
-    LISTA* current = *l;
-    LISTA* prox = NULL;
+  LISTA* anterior = NULL;
+  LISTA* atual = *l;
 
-    while (current != NULL) {
-        next = current->prox;
-        current->prox = prev;
-        prev = current;
-        current = prox;
-    }
+  while (atual != NULL) {
+    LISTA* aux = atual->cabeca;
+    atual->cabeca = anterior;
+    anterior = atual;
+    atual = aux;
+  }
 
-    *l = prev;
-
+  *l = anterior;
 }
 
 /////////////////////////////////////////////////////

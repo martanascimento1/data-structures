@@ -59,3 +59,19 @@ No* lista = NULL;
      
     return 0;
 }
+void inverter(LISTA** l)
+{
+    LISTA* anterior = NULL;
+    LISTA* atual = *l;
+    LISTA* prox;
+
+    while (atual != NULL) {
+        prox = atual->cabeca;
+        atual->cabeca = anterior;
+        anterior = atual;
+        atual = prox;
+    }
+
+    *l = anterior;
+
+}
