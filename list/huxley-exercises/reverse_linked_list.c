@@ -33,6 +33,7 @@ void inverter(No** lista) {
         atual = proximo; 
     }
 
+
     *lista = anterior; 
 }
 void imprimir(No* lista) {
@@ -58,20 +59,4 @@ No* lista = NULL;
     imprimir(lista);
      
     return 0;
-}
-void inverter(LISTA** l)
-{
-    LISTA* anterior = NULL;
-    LISTA* atual = *l;
-    LISTA* prox;
-
-    while (atual != NULL) {
-        prox = atual->cabeca;
-        atual->cabeca = anterior;
-        anterior = atual;
-        atual = prox;
-    }
-
-    *l = anterior;
-
 }
