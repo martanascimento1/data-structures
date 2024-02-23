@@ -141,10 +141,24 @@ void destruir(LISTA *l)
 */
 void inverter(LISTA *l)
 {
+ LISTA *temp = NULL;
+ LISTA *current = l->cabeca;
 
-  
-//Insira o código aqui
+    while (current != NULL) {
+        temp = current->cauda;
+        current->cauda = current->cabeca;
+        current->cabeca = temp;
+        current = current->cauda;
+    }
 
+    if (temp != NULL) {
+        l = temp->cauda;
+        l->cauda = temp;
+        l->cabeca = current;
+
+    }
+
+   // return l;
   
 }
 

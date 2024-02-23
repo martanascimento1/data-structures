@@ -113,21 +113,18 @@ void destruir(LISTA *l)
 void inverter(LISTA *l)
 {
    
-if (l == NULL || l->cabeca == l) {
-        return; 
-    }
-     LISTA* prev = l;
-     LISTA* current = l->cabeca;
-     LISTA* cabeca;
-    do {
-        cabeca = current->cabeca;
-        current->cabeca = prev;
-        prev = current;
-        current = cabeca;
-    } while (current != l);
-    l->cabeca = prev;
-    l = prev;
-    return l;
+ LISTA* prev = l;
+ LISTA* current = l->cabeca;
+ LISTA* cabeca;
+
+ while (current != l) {
+    cabeca = current->cabeca;
+    current->cabeca = prev;
+    prev = current;
+    current = cabeca;
+ }
+ l->cabeca = prev;
+ return prev;
 }
 
 /////////////////////////////////////////////////////
