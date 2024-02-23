@@ -1,79 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Estrutura para um nó da lista encadeada
-typedef struct No No;
-struct No {
-  int item;
-  No *next;
+struct Node {
+    int data;
+    struct Node* next;
 };
 
-// Função para criar um novo nó
-No *criar_no(int item) {
-  No *novo_no = (No *)malloc(sizeof(No));
-  novo_no->item = item;
-  novo_no->next = NULL;
-  return novo_no;
+struct Node* novoNo(int data) {
+    struct Node* novo_no = (struct Node*) malloc(sizeof(struct Node));
+    novo_no->data = data;
+    novo_no->next = NULL;
+    return novo_no;
 }
 
-
-No *inserir() {
-  No *lista = NULL;
-  No *anterior = NULL;
-  int valor;
-while (scanf("%d", &valor) != EOF) {
-  if (valor == 0) {
-    break;
-  } 
-  No *novo_no = criar_no(valor);
-    if (lista == NULL) {
-      lista = novo_no;
-    } else {
-      anterior->next = novo_no;
+void inserirNoFinal(struct Node** head_ref, int data) {
+    struct Node* novo_no = novoNo(data);
+    if (*head_ref == NULL) {
+        *head_ref = novo_no;
+        return;
     }
-    anterior = novo_no;
-  }
-
-  return lista;
+    struct Node* ultimo = *head_ref;
+    while (ultimo->next != NULL) {
+        ultimo = ultimo->next;
+    }
+    ultimo->next = novo_no;
 }
-void sequencia(No *lista, int *inicio, int *fim) {
-  
-    int tamanho_atual = 0;
-    int tamanho_maximo = 0;
-    int inicio_atual = -1; // Inicializa com -1 para tratar caso não haja sequência de 0
-    int inicio_maximo = -1;
-    int posicao = 0; // Variável para rastrear a posição atual na lista
 
-    while (lista != NULL) {
-        if (lista->item == 0) {
-            tamanho_atual++;
-            if (tamanho_atual > tamanho_maximo) {
-                tamanho_maximo = tamanho_atual;
-                inicio_maximo = inicio_atual;
-            }}
-            else {
-            tamanho_atual = 0;
-            inicio_atual = posicao + 1; // Atualiza o início da sequência
+void maiorSequenciaZeros(struct Node* head) {
+    int pos = 1;
+    int count = 0, maxCount = 0, start = 0, maxStart = 0;
+    struct Node* atual = head;
+    while (atual != NULL) {
+        if (atual->data == 0) {
+            if (count == 0) start = pos;
+            count++;
+        } else {
+            if (count > maxCount) {
+                maxCount = count;
+                maxStart = start;
+            }
+            count = 0;
         }
-        lista = lista->next;
-        posicao++;
+        atual = atual->next;
+        pos++;
     }
-    if (tamanho_maximo > 0) {
-        *inicio = inicio_maximo;
-        *fim = inicio_maximo + tamanho_maximo - 1;
-    } else {
-        *inicio = -1;
-        *fim = -1;
-    } }
+    if (count > maxCount) {
+        maxCount = count;
+        maxStart = start;
+    }
+    printf("%d %d\n", maxStart, maxStart + maxCount - 1);
+}
 
 int main() {
-
-  int inicio, fim;
-  No *lista = inserir();
-  sequencia(lista, &inicio, &fim);
-  printf("%d %d\n", inicio, fim);
-
-  return 0;
+    struct Node* head = NULL;
+    int data;
+    while (scanf("%d", &data) != EOF) {
+        if (data == 0) {
+            break;
+        }
+        inserirNoFinal(&head, data);
+    }
+    maiorSequenciaZeros(head);
+    return 0;
 }
-
-
