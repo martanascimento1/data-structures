@@ -14,34 +14,30 @@ typedef struct
 typedef struct estrutura
 {
     ITEM item;
-    struct estrutura *ant;
     struct estrutura *prox;
 } NO;
 
 typedef struct
 {
     NO* cabeca;
-    NO* cauda;
     int tamanho;
 } LISTA;
-
 
 
 // Inicializa a lista deixando-a pronta para ser utilizada.
 void inicializar(LISTA *l)
 {
-    l->cabeca = NULL;
-    l->cauda = NULL;
+    l->cabeca = (NO*) malloc(sizeof(NO));
+    l->cabeca->prox = l->cabeca;  // faz a referencia circular
     l->tamanho = 0;
 }
 
 
-// Cria um novo no com o item, os apontadores para o anterior e para o proximo
-NO* criarNo(ITEM item,  NO *ant, NO *prox)
+// Cria um novo no com o item e o apontador para o proximo passados.
+NO* criarNo(ITEM item, NO *prox)
 {
     NO* pNovo = (NO*) malloc(sizeof(NO));
     pNovo->item = item;
-    pNovo->ant = ant;
     pNovo->prox = prox;
     return pNovo;
 }
@@ -68,99 +64,66 @@ bool vazia(LISTA *l)
             duplicacao.
 */
 bool inserir(ITEM item, LISTA *l){
-    NO* pNovo = criarNo(item, NULL, l->cabeca);
+    l->cabeca->prox = criarNo(item, l->cabeca->prox);
     l->tamanho++;
-
-    if (l->cabeca) // cabeca != NULL
-       l->cabeca->ant = pNovo;  // ajusta o apontador para o anterior na antiga cabeca
-    
-    l->cabeca = pNovo;
-    
-    if (l->cauda == NULL) // se nao tinha cauda, o novo no estara tambem na cauda 
-       l->cauda = pNovo;
-
     return true;
 }
 
 
 // Exibicao da lista
-void exibirListaCabecaCauda(LISTA *l)
+void exibirLista(LISTA *l)
 {
-    NO* p = l->cabeca;
-    while (p)
+    NO* p = l->cabeca->prox;
+    while (p != l->cabeca)
     {
         printf("(%d,%s)", p->item.chave, p->item.valor);
         p = p->prox;
     }
 }
 
-
-// Exibicao da lista comecando da cauda
-void exibirListaCaudaCabeca(LISTA *l)
-{
-    NO* p = l->cauda;
-    while (p)
-    {
-        printf("(%d,%s)", p->item.chave, p->item.valor);
-        p = p->ant;
-    }
-}
-
-
-void imprimirLista(LISTA *l, bool crescente)
+// Imprime a lista partindo da cabeca para a cauda
+void imprimirLista(LISTA *l)
 {
     printf("Tamanho = %d\n", tamanho(l));
-    if (crescente)
-        exibirListaCabecaCauda(l);
-    else
-        exibirListaCaudaCabeca(l);
+    exibirLista(l);
     printf("\n");
 }
-
 
 
 // Liberacao das variaveis dinamicas dos nos da lista, iniciando da cabeca
 void destruir(LISTA *l)
 {
-    NO* atual = l->cabeca;
-    while (atual) {
+    NO* atual = l->cabeca->prox;
+    while (atual != l->cabeca) {  // enquando nao deu a volta completa
         NO* prox = atual->prox; // guarda proxima posicao
         free(atual);            // libera memoria apontada por atual
         atual = prox;
     }
-    l->cabeca = NULL; // ajusta a cabeca da lista (vazia)
-    l->cauda = NULL; // ajusta a cauda da lista (vazia)
+    free(l->cabeca);  // liberacao no No cabeca
+    l->cabeca = NULL; // ajusta inicio da lista (vazia)
 }
 
 
 /////////////////////////////////////////////////////
 
-/*
- Objetivo: Inverte a lista encadeada ajustando apenas os apontadores,
-           ou seja, evitando copiar os dados para uma nova lista.
-*/
+
 void inverter(LISTA *l)
 {
- LISTA *temp = NULL;
- LISTA *current = l->cabeca;
+ NO* prev = l;
+ NO* current = l->cabeca;
+ NO* cabeca;
 
-    while (current != NULL) {
-        temp = current->cauda;
-        current->cauda = current->cabeca;
-        current->cabeca = temp;
-        current = current->cauda;
-    }
+ while (current != l) {
+    cabeca = current->prox;
+    current->prox = prev;
+    prev = current;
+    current = cabeca;
+ }
+ l->cabeca = prev;
 
-    if (temp != NULL) {
-       // l = temp->cauda;
-        l->cauda = temp->cauda;
-        l->cabeca = temp->cabeca;
-
-    }
-
-   // return l;
-  
 }
+ 
+
 
 /////////////////////////////////////////////////////
 
@@ -168,7 +131,7 @@ void lerItens(LISTA *l)
 {
     int n;
     scanf("%d", &n);
-
+    
     // insere os valores n pares chave,valor
     ITEM item;
     for (int i = 0; i < n; i++)
@@ -180,8 +143,6 @@ void lerItens(LISTA *l)
 }
 
 
-//////////////////////////////////////////////////////////////
-
 int main(){
   LISTA l;
   ITEM item;
@@ -189,13 +150,11 @@ int main(){
   inicializar(&l);
 
   lerItens(&l);
-  imprimirLista(&l, true);   // cabeca => cauda
-  
+  imprimirLista(&l);
+    
   inverter(&l);
-  imprimirLista(&l, true);  // cabeca => cauda
-  imprimirLista(&l, false); // cauda => cabeca
+  imprimirLista(&l);
 
   destruir(&l);
   return 0;
 }
-
