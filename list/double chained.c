@@ -152,9 +152,9 @@ void inverter(LISTA *l)
     }
 
     if (temp != NULL) {
-        l = temp->cauda;
-        l->cauda = temp;
-        l->cabeca = current;
+       // l = temp->cauda;
+        l->cauda = temp->cauda;
+        l->cabeca = temp->cabeca;
 
     }
 
