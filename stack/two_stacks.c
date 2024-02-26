@@ -15,15 +15,23 @@ void create(TPilhaDupla *pd) {
 }
 
 void destroy(TPilhaDupla *pd) {
-	//Insira o código aqui
+	free(pd);
 }
 
 int isfull(TPilhaDupla *pd) {
+    return pd->topo1 == pd->topo2 -1;
 }
 
 int isempty(TPilhaDupla *pd, int topo) {
-	//Insira o código aqui
-}
+	if (topo == 1) {
+        return pd->topo1 == -1;
+    }
+    else if (topo == 2) {
+        return pd->topo2 == TAM;
+    }
+    return -1;
+    }
+
 
 void push(TPilhaDupla *pd, ITEM x, int topo) {
 	if (pd->topo1 < pd->topo2 -1) {
@@ -57,13 +65,28 @@ ITEM pop(TPilhaDupla *pd, int topo) {
             else {
             exit(EXIT_FAILURE);
         }
-        }
+        }  
         return -1;
     }
 
 ITEM top(TPilhaDupla *pd, int topo) {
-	
-}
+   if (topo == 1) {
+       if (pd->topo1 >= 0) {
+           return pd->vet[pd->topo1];
+       }
+       else {
+           exit(EXIT_FAILURE);
+       }
+   }
+   else if (topo == 2) {
+       if (pd->topo2 < TAM) {
+           return pd->vet[pd->topo2];
+       }
+       else {
+           exit(EXIT_FAILURE);
+       }
+   }}
+   
 void preenche(TPilhaDupla *pd) {
     ITEM x;
     int topo, qtd, i;
@@ -76,6 +99,7 @@ void preenche(TPilhaDupla *pd) {
     }
 }
 
+
 void exibe(TPilhaDupla *pd) {
     int topo;
 
@@ -85,6 +109,8 @@ void exibe(TPilhaDupla *pd) {
 
 int main(void) {
     TPilhaDupla pd;
+
+
 
     create(&pd);
     preenche(&pd);
