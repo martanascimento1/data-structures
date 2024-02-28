@@ -53,18 +53,14 @@ ITEM pop(TPilhaDupla *pd, int topo) {
             pd->topo1--;
             return x;
         }
-        else {
-            exit(EXIT_FAILURE);
-        } }
+ }
         else if (topo == 2 ) {
             if (pd->topo2 < TAM) {
             int x = pd->vet[pd->topo2];
             pd->topo2++;
             return x;
             }
-            else {
-            exit(EXIT_FAILURE);
-        }
+            
         }  
         return -1;
     }
@@ -74,17 +70,13 @@ ITEM top(TPilhaDupla *pd, int topo) {
        if (pd->topo1 >= 0) {
            return pd->vet[pd->topo1];
        }
-       else {
-           exit(EXIT_FAILURE);
-       }
+       
    }
    else if (topo == 2) {
        if (pd->topo2 < TAM) {
            return pd->vet[pd->topo2];
        }
-       else {
-           exit(EXIT_FAILURE);
-       }
+       
    }}
    
 void preenche(TPilhaDupla *pd) {
@@ -109,8 +101,6 @@ void exibe(TPilhaDupla *pd) {
 
 int main(void) {
     TPilhaDupla pd;
-
-
 
     create(&pd);
     preenche(&pd);
