@@ -19,7 +19,6 @@ void push(Stack *s, StackStates *ss, int value) {
         return;
     }
     s->items[++(s->top)] = value;
-   // saveStackState(s, ss);
 }
 
 int pop(Stack *s, StackStates *ss) {
@@ -27,7 +26,6 @@ int pop(Stack *s, StackStates *ss) {
         return -1;
     }
     int popped = s->items[(s->top)--];
-   // saveStackState(s, ss);
     return popped;
 }
 
@@ -55,7 +53,7 @@ void imprimirPilha(Stack *s, StackStates *ss) {
         sprintf(item, "%d ", s->items[i]);
         strcat(state, item);
     }
-   // printf("%s\n", state);
+   
     strcpy(ss->states[ss->count++], state);
 }
 
