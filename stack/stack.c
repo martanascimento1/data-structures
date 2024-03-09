@@ -7,79 +7,71 @@
 typedef struct {
     int top;
     int items[MAX];
-} Stack;
+} Pilha;
 
 typedef struct {
     int count;
     char states[MAX][MAX];
-} StackStates;
+} Stack;
 
-void push(Stack *s, StackStates *ss, int value) {
-    if (s->top == MAX - 1) {
-        return;
-    }
-    s->items[++(s->top)] = value;
-}
-
-int pop(Stack *s, StackStates *ss) {
-    if (s->top == -1) {
-        return -1;
-    }
-    int popped = s->items[(s->top)--];
-    return popped;
-}
-
-void saveStackState(Stack *s, StackStates *ss) {
+void salvar(Pilha *p, Stack *s) {
     char state[MAX] = "";
-    for (int i = s->top; i >= 0; i--) {
+    for (int i = p->top; i >= 0; i--) {
         char item[10];
-        sprintf(item, "%d ", s->items[i]);
+        sprintf(item, "%d", p->items[i]);
         strcat(state, item);
-    }
-    strcpy(ss->states[ss->count++], state);
-}
-
-void printStackStates(StackStates *ss) {
-
-    for (int i = 0; i < ss->count; i++) {
-        printf("%s\n", ss->states[i]);
-    }
-}
-
-void imprimirPilha(Stack *s, StackStates *ss) {
-    char state[MAX] = "";
-    for (int i = s->top; i >= 0; i--) {
-        char item[10];
-        sprintf(item, "%d ", s->items[i]);
-        strcat(state, item);
+         if (i != 0) { 
+            strcat(state, " ");
+        }
     }
    
-    strcpy(ss->states[ss->count++], state);
+    strcpy(s->states[s->count++], state);
+}
+void push(Pilha *p, Stack *s, int x) {
+    if (p->top == MAX - 1) {
+        return;
+    }
+    p->items[++(p->top)] = x;
+}
+
+int pop(Pilha *p, Stack *s) {
+    if (p->top == -1) {
+        return -1;
+    }
+    int topo = p->items[(p->top)--];
+    return topo;
+}
+
+void exibirPilha(Stack *s) {
+
+    for (int i = 0; i < s->count; i++) {
+        printf("%s\n", s->states[i]);
+    }
 }
 
 int main() {
+    Pilha p;
+    p.top = -1;
     Stack s;
-    s.top = -1;
-    StackStates ss;
-    ss.count = 0;
+    s.count = 0;
     char command[20];
-    int value;
+    int valor;
 
     while (1) {
         scanf("%s", command);
         if (strcmp(command, "Empilhar") == 0) {
-            scanf("%d", &value);
-            push(&s, &ss, value);
+            scanf("%d", &valor);
+            push(&p, &s, valor);
         } else if (strcmp(command, "Desempilhar") == 0) {
-            pop(&s, &ss);
+            pop(&p, &s);
         } else if (strcmp(command, "Imprimir") == 0) {
-          imprimirPilha(&s, &ss);
+          salvar(&p, &s);
         }  else if (strcmp(command, "Finalizar") == 0) {
             break;
     } }
 
 
-    printStackStates(&ss);
+    exibirPilha(&s);
 
     return 0;
 }

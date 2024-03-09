@@ -18,8 +18,11 @@ void salvar(Pilha *p, Stack *s) {
     char state[MAX] = "";
     for (int i = p->top; i >= 0; i--) {
         char item[10];
-        sprintf(item, "%d ", p->items[i]);
+        sprintf(item, "%d", p->items[i]);
         strcat(state, item);
+        if (i != 0) { 
+            strcat(state, " ");
+        }
     }
     strcpy(s->states[s->valor++], state);
 }
