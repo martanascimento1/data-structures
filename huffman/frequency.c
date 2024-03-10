@@ -194,15 +194,61 @@ void imprimir_dicionario(char **dicionario) {
 }
 
 //PARTE 5 - Codificação do texto
+int calcula_tamanho_string(char **dicionario,unsigned char *texto) {
+    int i=0, tam =0;
+    while (texto[i] != '\0') {
+        tam = tam + strlen(dicionario[texto[i]]);
+        i++;
+    }
+    return tam+1;
+}
+char* codificar( char **dicionario, unsigned char *texto) {
+    int i=0 ;
+    char *codigo;
+    int tam = calcula_tamanho_string(dicionario, texto);
+    codigo = (char*)calloc(tam, sizeof(char));
+    while (texto[i] != '\0')
+    {
+        dicionario[texto[i]];
+        strcat(codigo, dicionario[texto[i]]);
+            i++;
+    }
 
+    return codigo;
+}
 
+//PARTE 6 - Decodificação do texto
+char* decodificar( unsigned char texto[] , No*raiz) {
+    int i = 0;
+    No *aux = raiz;
+    char *decodificado;
+    char temp [2];
+    decodificado = (char*)calloc(strlen(texto), sizeof(char));
+    while (texto[i] != '\0') {
+        if (texto[i] == '0') {
+            aux = aux->esq;
+        }
+        else {
+            aux = aux->dir;
+        }
+        if (aux->esq == NULL && aux->dir == NULL) {
+            temp[0] = aux->c;
+            temp[1] = '\0';
+            strcat(decodificado, temp);
+            aux = raiz;
+        }
+        i++;
+    }
+    return decodificado;
+}
 int main () {
-    unsigned char texto[] ="Vamos aprender a programa";
+    unsigned char texto[] ="Vamos aprender a programação";
     unsigned int tab_freq[MAX];
     Lista lista;
     No *arvore;
     int altura;
     char **dicionario;
+    char *codificado, *decodificado;
     setlocale(LC_ALL, "Portuguese");
     
     //PARTE 1 - Inicialização da tabela de frequência
@@ -224,6 +270,14 @@ int main () {
     dicionario = aloca_dicionario(altura);
     gerar_dicionario(dicionario, arvore, "", altura);
     imprimir_dicionario(dicionario);
+
+    //PARTE 5 - Codificação do texto
+    codificado = codificar(dicionario, texto);
+    printf("\n\tTexto codificado: %s\n ", codificado);
+
+    //PARTE 6 - Decodificação do texto
+    decodificado = decodificar(codificado, arvore);
+    printf("\n\tTexto decodificado: %s\n", decodificado);
 
   return 0;
 }
