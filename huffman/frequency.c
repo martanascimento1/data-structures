@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 #define MAX 256
+
 
 typedef struct no {
     unsigned char c;
     int frequencia;
     struct no *esq, *dir, *prox;
 } No;
+
 
 typedef struct lista {
     No *inicio;
@@ -55,11 +58,11 @@ void inserir(Lista *lista, No *novo) {
         aux = lista->inicio;
         while (aux->prox != NULL && aux->prox->frequencia <= novo->frequencia) {
             aux = aux->prox;
-
-       novo->prox = aux->prox;
-       aux->prox = novo;
         }
+        novo->prox = aux->prox;
+        aux->prox = novo;
     }
+
     lista->tam++;
 }
 
@@ -88,7 +91,7 @@ void imprimir_lista (Lista *lista) {
     No *aux;
     aux = lista->inicio;
     while (aux != NULL) {
-        printf("Caracter: %c  Frequência = %d\n", aux->c, aux->frequencia);
+        printf("\tCaracter: %c  \tFrequência = %d\n", aux->c, aux->frequencia);
         aux = aux->prox;
     }
 }
@@ -131,20 +134,75 @@ No* criar_arvore(Lista *lista) {
 
 void imprimir_arvore(No *raiz, int tam) {
     if (raiz->esq == NULL && raiz->dir == NULL) {
-        printf("%c", raiz->c);
-        printf("\n altura = %d\n", tam);
+        printf("\tFolha: %c\t Altura = %d\n", raiz->c);
     }
     else {
         imprimir_arvore(raiz->esq, tam+1);
         imprimir_arvore(raiz->dir, tam+1);
-    
     }
 }
+
+//Montar o dicinário de Huffman
+
+int altura_arvore(No *raiz) {
+    int alt_esq, alt_dir;
+    if (raiz == NULL) {
+        return -1;
+    }
+    else {
+         alt_esq = altura_arvore(raiz->esq) +1;
+         alt_dir = altura_arvore(raiz->dir) +1;
+        if (alt_esq > alt_dir) {
+            return alt_esq;
+        }
+        else {
+            return alt_dir;
+        }
+    }
+}
+
+char** aloca_dicionario(int altura) {
+    char **dicionario;
+    dicionario = (char**)malloc(sizeof(char *) * MAX);
+    for (int i = 0; i < MAX; i++) {
+        dicionario[i] =(char*)calloc(altura, sizeof(char));
+        
+    } return dicionario;
+}
+
+void gerar_dicionario(char **dicionario, No *raiz, char *codigo, int tam) {
+    char esquerda[tam], direita[tam];
+    if (raiz->esq == NULL && raiz->dir == NULL) {
+        strcpy(dicionario[raiz->c],codigo);
+    }
+    else {
+       strcpy(esquerda, codigo);
+       strcpy(direita, codigo);
+       strcat(esquerda, "0");
+       strcat(direita, "1");
+        gerar_dicionario(dicionario,raiz->esq, esquerda, tam);
+        gerar_dicionario(dicionario, raiz->dir, direita, tam);
+
+} }
+
+void imprimir_dicionario(char **dicionario) {
+    for (int i = 0; i < MAX; i++) {
+        if(strlen(dicionario[i]) > 0) {
+            printf("\tdicionario\n");
+            printf("\t 3%d = %s\n", i, dicionario[i]); }
+    }
+}
+
+//PARTE 5 - Codificação do texto
+
+
 int main () {
     unsigned char texto[] ="Vamos aprender a programa";
     unsigned int tab_freq[MAX];
     Lista lista;
     No *arvore;
+    int altura;
+    char **dicionario;
     setlocale(LC_ALL, "Portuguese");
     
     //PARTE 1 - Inicialização da tabela de frequência
@@ -160,5 +218,12 @@ int main () {
     //PARTE 3 - Criação da árvore de Huffman
     arvore = criar_arvore(&lista);
     imprimir_arvore(arvore, 0);
+
+    //PARTE 4 - Montar o dicionário de Huffman
+    altura = altura_arvore(arvore)+1;
+    dicionario = aloca_dicionario(altura);
+    gerar_dicionario(dicionario, arvore, "", altura);
+    imprimir_dicionario(dicionario);
+
   return 0;
 }
