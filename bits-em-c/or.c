@@ -2,23 +2,22 @@
 #include <stdlib.h>
 
 /*
-Operador bit a bit OR (|) - Se um bit for 1, o resultado é 1
-  A | B
-  0 | 0 = 0
-  0 | 1 = 1
-  1 | 0 = 1
-  1 | 1 = 1
+Operador bit a bit OU exclusivo ( ^)
+  A ^ B
+  0 ^ 0 = 0
+  0 ^ 1 = 1
+  1 ^ 0 = 1
+  1 ^ 1 = 0
 
 */
 int main () {
 
-int a, b, c;
-a = 30; // 0001 1110
-b = 19; // 0001 0011
-c = a | b; // 0001 1111 = 31
-//c = a || b; // 0000 0001 = 1
-
-printf("%d | %d = %d\n", a, b, c);
+int a, b;
+a = 73; // 01001001
+b = a ^(1 << 3); // 01000000 para inverter o bit 3 = 65
+printf("a: %d\tb: %d\n",a, b); 
+b = b ^(1 << 3); // 01000000 para inverter o bit 3 = 73
+printf("a: %d\tb: %d\n",a, b); 
 
 return 0;
 

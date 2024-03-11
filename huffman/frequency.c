@@ -241,15 +241,136 @@ char* decodificar( unsigned char texto[] , No*raiz) {
     }
     return decodificado;
 }
+
+// Parte 7: Compactação e descompactação de arquivos
+void compactar (unsigned char str[]) {
+    FILE *arq;
+    arq = fopen("compactado.wg", "wb");
+    int i = 0, j=7;
+    unsigned char mascara, byte = 0; //00000000
+    if (arq) {
+        while (str[i] != '\0')
+
+        {
+        mascara = 1;
+        if (str[i] == '1') {
+            mascara = mascara << j;
+            byte = byte | mascara;
+        }
+        j--;
+        if (j < 0) { //tem um byte formado
+            fwrite(&byte, sizeof(unsigned char), 1, arq);
+            j = 7;
+            byte = 0;
+        }
+        i++;
+    }
+    if (j != 7) {
+        fwrite(&byte, sizeof(unsigned char), 1, arq);
+    }
+    fclose(arq);
+    }
+    
+    else {
+        printf("\nErro ao abrir/criar o arquivo \n");
+    }
+} 
+
+//Descompactar
+unsigned int eh_bit_um (unsigned char byte, int posicao) {
+    unsigned char mascara = (1 << posicao);
+    return byte & mascara;
+}
+void descompactar(No *raiz) {
+    FILE *arq;
+    arq = fopen("compactado.wg", "rb");
+    No *aux = raiz;
+    unsigned char byte, mascara;
+    int i ;
+    if (arq) {
+        while (fread(&byte, sizeof(unsigned char), 1, arq) > 0) {
+            for (i = 7; i>= 0; i--) {
+                if (eh_bit_um(byte, i)) {
+                    aux = aux->dir;
+                }
+                else {
+                   aux = aux->esq;
+                }
+                if (aux->esq == NULL && aux->dir == NULL) {
+                    printf("%c", aux->c);
+                    aux = raiz;
+                }
+            }
+            
+        }
+        fclose(arq);
+    }
+    else {
+        printf("\nErro ao abrir o arquivo\n");
+    }
+}
+
+int descobrir_tamanho (char *nome_arquivo) {
+    FILE *arq;
+    int tam =0;
+    arq = fopen("teste.txt", "r");
+    if (arq) {
+        while (fgetc(arq) != -1) {
+            tam++;
+            fclose(arq);
+        }
+    }
+    else {
+        printf("\nErro ao abrir o arquivo em descobrir_tamanho\n");
+        
+    }
+    return tam;
+
+}
+
+void ler_texto (unsigned char *texto) {
+    FILE *arq;
+    arq = fopen("teste.txt", "r");
+    char letra;
+    int i = 0;
+    if (arq) {
+        
+           while (!feof (arq))
+           {
+           letra = fgetc(arq);
+           if (letra != -1) {
+               texto[i] = letra;
+               i++;
+           }
+           else {
+               texto[i] = '\0';
+           }
+           
+            fclose(arq);
+        } }
+    else {
+        printf("\nErro ao abrir o arquivo em ler_texto\n");
+        
+    }
+   
+}
 int main () {
-    unsigned char texto[] ="Vamos aprender a programação";
+    //unsigned char texto[] ="Vamos aprender a programação"
+    unsigned char *texto;
     unsigned int tab_freq[MAX];
     Lista lista;
     No *arvore;
     int altura;
+    int tam;
     char **dicionario;
     char *codificado, *decodificado;
     setlocale(LC_ALL, "Portuguese");
+
+    tam = descobrir_tamanho(texto);
+    printf("Tamanho do arquivo: %d\n", tam);
+    texto = calloc(tam+2, sizeof(unsigned char));
+    ler_texto(texto);
+    printf("\n\tTexto: %s\n", texto);
     
     //PARTE 1 - Inicialização da tabela de frequência
     inicializa_tabela_com_zero(tab_freq);
@@ -278,6 +399,17 @@ int main () {
     //PARTE 6 - Decodificação do texto
     decodificado = decodificar(codificado, arvore);
     printf("\n\tTexto decodificado: %s\n", decodificado);
+
+    //PARTE 7 - Compactação e descompactação de arquivos
+    compactar(codificado);
+    // PARTE 8 - descompactar
+    printf("\n\tTexto descompactado: ");
+    descompactar(arvore);
+    printf("\n\n");
+
+    free(texto);
+    free(codificado);
+    free(decodificado);
 
   return 0;
 }
