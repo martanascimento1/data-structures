@@ -5,24 +5,25 @@
 #include <stdbool.h>
 
 struct No {
-    int index;
+    int item;
     struct No* next;
 };
 
 
-void inserirNo(struct No** head, int index) {
-    struct No* newNode = (struct No*)malloc(sizeof(struct No));
-    newNode->index = index;
-    newNode->next = NULL;
+void inserir(struct No** lista, int item) {
+    struct No* novo_no = (struct No*)malloc(sizeof(struct No));
+    novo_no->item = item;
+    novo_no->next = NULL;
 
-    if (*head == NULL) {
-        *head = newNode;
+
+    if (*lista == NULL) {
+        *lista = novo_no;
     } else {
-        struct No* current = *head;
+        struct No* current = *lista;
         while (current->next != NULL) {
             current = current->next;
         }
-        current->next = newNode;
+        current->next = novo_no;
     }
 }
 
@@ -34,7 +35,7 @@ void freeList(struct No* lista) {
     }
 }
 
-void findLargestSequence(const char* str, int* start, int* end) {
+void sequencia(const char* str, int* start, int* end) {
     struct No* lista = NULL; 
     int currentStart = -1;
     int longestStart = -1;
@@ -54,7 +55,7 @@ void findLargestSequence(const char* str, int* start, int* end) {
                     longestStart = currentStart;
                     longestEnd = i - 1;
                 }
-                inserirNo(&lista, currentStart);
+                inserir(&lista, currentStart);
                 currentStart = -1;
             }
         }
@@ -66,13 +67,12 @@ void findLargestSequence(const char* str, int* start, int* end) {
             longestStart = currentStart;
             longestEnd = strlen(str) - 1;
         }
-        inserirNo(&lista, currentStart);
+        inserir(&lista, currentStart);
     }
 
     *start = longestStart;
     *end = longestEnd;
 
-    // Libera a memoria da lista encadeada
     freeList(lista);
 }
 
@@ -86,7 +86,7 @@ int main() {
         }
 
         int start, end;
-        findLargestSequence(str, &start, &end);
+        sequencia(str, &start, &end);
 
         if (start != -1 && end != -1) {
             printf("%d %d\n", start, end);

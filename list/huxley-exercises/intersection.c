@@ -6,6 +6,7 @@ typedef struct No {
     struct No* next;
 } No;
 
+
 void inserir(No** lista, int n) {
     No* novo_no = (No*)malloc(sizeof(No));
     novo_no->item = n;
