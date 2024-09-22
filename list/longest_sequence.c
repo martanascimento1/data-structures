@@ -13,6 +13,7 @@ struct Node* novoNo(int data) {
     return novo_no;
 }
 
+
 void inserirNoFinal(struct Node** head_ref, int data) {
     struct Node* novo_no = novoNo(data);
     if (*head_ref == NULL) {

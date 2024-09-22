@@ -52,26 +52,42 @@ ITEM retrieve(TFila *f) {
 }
 
 void createfp(TFilaPrio *fp) {
-	//Insira o código aqui
+	create(&fp->f1);
+    create(&fp->f2);
+    create(&fp->f3);
 }
 
 void destroyfp(TFilaPrio *fp) {
-    for(int i = 0; i < 3; i++)
-        destroyQueue(fp.[i]);
-    free(fp);
+    destroy(&fp->f1);
+    destroy(&fp->f2);
+    destroy(&fp->f3);
 }
 
 int isemptyfp(TFilaPrio *fp, int prio) {
-	//Insira o código aqui
+	TFila *filas[3] = {&fp->f1, &fp->f2, &fp->f3};
+    if (prio < 1 || prio > 3) {
+        puts("Prioridade inválida");
+        abort();
+    }
+    return isempty(filas[prio - 1]);
 }
 
 void storefp(TFilaPrio *fp, int prio, ITEM x) {
-	//Insira o código aqui
+	TFila *filas[3] = {&fp->f1, &fp->f2, &fp->f3};
+    if (prio < 1 || prio > 3) {
+        puts("Prioridade inválida");
+        abort();
+    }
+    store(filas[prio - 1], x);
 }
 
 ITEM retrievefp(TFilaPrio *fp, int prio) {
-	//Insira o código aqui
-}
+	TFila *filas[3] = {&fp->f1, &fp->f2, &fp->f3};
+    if (prio < 1 || prio > 3) {
+        puts("Prioridade inválida");
+        abort();
+    }
+    return retrieve(filas[prio - 1]); }
 
 void preenche(TFilaPrio *fp) {
     ITEM x;

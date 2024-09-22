@@ -56,7 +56,7 @@ void pop(Pilha *pilha) {
 
 void ler(Pilha *pilha) {
     char x[10];
-    int lista[100];  
+    int lista[10000];  
     int n;
     char aux;
 
