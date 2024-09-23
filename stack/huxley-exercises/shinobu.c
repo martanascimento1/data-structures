@@ -48,7 +48,7 @@ int POP(STACK* stack) {
       if(IS_EMPTY(stack))
     {
         puts("Underflow");
-        return -1;
+        abort();
     }
     
     NODE *aux = stack->head;
@@ -58,8 +58,7 @@ int POP(STACK* stack) {
     return aux->element;
 }
 
-//Recebe uma pilha e um inteiro e retorna a nova pilha
-//Adiciona um novo node no topo da pilha
+
 void PUSH(STACK* stack, int element) {
      NODE *new_node = create_node(element);
     
@@ -70,8 +69,7 @@ void PUSH(STACK* stack, int element) {
     return;
 }
 
-//Recebe a pilha e a operacao a ser feita
-//faz a operacao da calculadora
+
 void result(STACK* stack, char operation) {
     int v1 = POP(stack);
     int v2 = POP(stack);
@@ -93,14 +91,12 @@ void result(STACK* stack, char operation) {
     PUSH(stack, resultado);
 }
 
-//Recebe uma pilha vazia e quantas strings serao lidas
-//Le as n strings que vao seguir e resolve as expressoes
+
 void Calculadora(STACK* calculadora, int size) {
 
     for(int i = 0; i < size; i++)
     {
         char operacao[50];
-
         scanf("%s", operacao);
 
         if(operacao[0] == '+' || operacao[0] == '-' || operacao[0] == '/' || operacao[0] == '*')

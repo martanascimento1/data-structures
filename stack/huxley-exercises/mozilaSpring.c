@@ -11,7 +11,7 @@ No *novoNo(No *data) {
     return novo_no;
 }
 
-void removeNewLine(char *string)
+void Excluir(char *string)
 {
     if(string[strlen(string) - 1] == '\n')
     {
@@ -49,13 +49,13 @@ int Volte(No *data)
 
     return n;
 }
-void scanstack(No *headback, No *headforward)
+void Pillha(No *headback, No *headforward)
 {
     char string[10];
 
     while(fgets(string,10,stdin) != NULL)
     {
-        removeNewLine(string);
+        Excluir(string);
         if(strcmp(string, "ENTER") == 0)
         {
             headback = novoNo(headback);
@@ -75,8 +75,9 @@ void scanstack(No *headback, No *headforward)
     int forward = Avance(headforward);
     int back = Volte(headback);
 
-    printf("BACK: %d\nFORWARD: %d\n", back, forward);
+    printf("BACK: %d\nFORWARD: %d\n", back-1, forward);
 }
+
 
 
 int main()
@@ -84,7 +85,7 @@ int main()
     No *headback = NULL;
     No *headforward = NULL;
 
-    scanstack(headback, headforward);
+    Pillha(headback, headforward);
 
     return 0;
 }
