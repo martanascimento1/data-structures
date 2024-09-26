@@ -23,6 +23,7 @@ binary_tree* create_empty_binary_tree()
 {
  return NULL;
 }
+
 binary_tree* create_binary_tree(
  int item, binary_tree *left, binary_tree *right)
 {
