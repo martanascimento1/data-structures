@@ -8,6 +8,7 @@ typedef struct No {
 
 
 void inserir(No** lista, int n) {
+    
     No* novo_no = (No*)malloc(sizeof(No));
     novo_no->item = n;
     novo_no->next = NULL;

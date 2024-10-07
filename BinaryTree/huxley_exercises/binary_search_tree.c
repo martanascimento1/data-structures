@@ -19,14 +19,8 @@ binary_tree* create_binary_tree( int item, binary_tree *left, binary_tree *right
  new_binary_tree->right = right;
 
  return new_binary_tree;
-} 
-
-        printf("( %d", root->item);
-        printtree(root->left);
-        printtree(root->right);
-        printf(")");
-    }
 }
+
 /*binary_tree* create(int item) {
    struct binary_tree* new_binary_tree =
  (struct binary_tree*)malloc(sizeof(binary_tree));
